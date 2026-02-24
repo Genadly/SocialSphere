@@ -1,0 +1,57 @@
+:root {
+	--color-colors: #7EB3AD
+					#00647B
+					#DFCAC9
+					#88C9C2
+					#6F938F
+					#FFFFFF
+}
+
+.text-style-header-head {
+  font-size: 64px;
+  font-family: Itim;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+.text-style-header-chat-name {
+  font-size: 40px;
+  font-family: Itim;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+.text-style-main-messege {
+  font-size: 40px;
+  font-family: Itim;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+.text-style-footer-foot {
+  font-size: 20px;
+  font-family: Itim;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+.text-style-aside-inf {
+  font-size: 64px;
+  font-family: Itim;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+.text-style-aside-button-chat {
+  font-size: 32px;
+  font-family: Itim;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}

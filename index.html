@@ -1,13 +1,115 @@
-< !DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ru">
-< head>
-‹meta charset="UTF-8">
-‹meta name="viewport" content="width=device-width, initial-scale=1.0"›
-‹title>Название вашего проекта‹/title>
-«link rel="stylesheet" href="css/style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SocialSphere - социальная сеть для общения">
+    <title>Лаба_3_Вариант_5 | SocialSphere</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 </head>
-‹ body>
-•‹h1>Добро пожаловать в [Название проекта) !</h1>
-• ‹р>это стартовая страница моего веб-приложения. </р>
-«script src="js/script.js"*/script> </body>
+<body itemscope itemtype="https://schema.org/Organization">
+    <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+
+    <header class="header">
+        <div class="header__container" itemprop="header">
+            <h1 class="header__logo" itemprop="name">SocialSphere</h1>
+            <div class="header__info">
+                <strong>Основатели:</strong> 
+                    <span itemprop="founder" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">Пенязь Дмитрий</span>
+                    </span> и 
+                    <span itemprop="founder" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">Редько Дмитрий</span>
+                    </span>
+                <p><strong>Год основания:</strong> <span itemprop="foundingDate">2026</span></p>
+                <strong>Юр. название:</strong> <span itemprop="legalName">SocialSphere</span>
+            </div>
+            
+            <meta itemprop="foundingDate" content="2026">
+            <meta itemprop="legalName" content="SocialSphere">
+        </div>
+    </header>
+
+    <div class="app">
+        <aside class="sidebar" aria-label="Список чатов">
+            <nav class="sidebar__nav">
+                <h2 class="sidebar__title">information</h2>
+                
+                <ul class="chat-list" role="list">
+                    <li class="chat-list__item">
+                        <div class="chat chat--active" itemprop="employee" itemscope itemtype="https://schema.org/Person">
+                            <span class="chat__name" itemprop="name">Имя1</span>
+                            <span class="chat__status" itemprop="jobTitle">Онлайн</span>
+                        </div>
+                    </li>
+                    <li class="chat-list__item">
+                        <div class="chat" itemprop="employee" itemscope itemtype="https://schema.org/Person">
+                            <span class="chat__name" itemprop="name">Имя2</span>
+                            <span class="chat__status" itemprop="jobTitle">Был 5 мин назад</span>
+                        </div>
+                    </li>
+                    <li class="chat-list__item">
+                        <div class="chat" itemprop="employee" itemscope itemtype="https://schema.org/Person">
+                            <span class="chat__name" itemprop="name">Имя3</span>
+                            <span class="chat__status" itemprop="jobTitle">Онлайн</span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="chat-area" id="main-content">
+            <header class="chat-header">
+                <h2 class="chat-header__title" itemprop="employee" itemscope itemtype="https://schema.org/Person">
+                    <span itemprop="name">Имя 1</span>
+                </h2>
+                <p class="chat-header__status">онлайн</p>
+            </header>
+
+            <section class="messages" aria-label="Сообщения в чате">
+                <h3 class="visually-hidden">История сообщений</h3>
+                
+                <article class="message message--incoming">
+                    <div class="message__content">сообщение1</div>
+                    <time class="message__time">10:30</time>
+                </article>
+                
+                <article class="message message--outgoing">
+                    <div class="message__content">сообщение2</div>
+                    <time class="message__time">10:31</time>
+                </article>
+            </section>
+                        <div class="input-area">
+                <label for="messageInput" class="visually-hidden">Введите сообщение</label>
+                <input type="text" 
+                    id="messageInput" 
+                    class="input-area__field" 
+                    placeholder="Введите сообщение..." 
+                    aria-label="Текст сообщения">
+                <button class="input-area__button" onclick="sendMessage()">Send</button>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer__container" itemprop="footer">
+            <p class="footer__copyright">© 2026 SocialSphere. All rights reserved.</p>
+            
+            <div class="footer__contacts" itemprop="employee" itemscope itemtype="https://schema.org/Person">
+                <h3>Служба поддержки</h3>
+                <p><strong>Контактное лицо:</strong> <span itemprop="name">Служба поддержки</span></p>
+                <p><strong>Email:</strong> <a href="mailto:60214129a@gmail.com" itemprop="email">60214129a@gmail.com</a></p>
+                <p><strong>Телефон:</strong> <a href="tel:+375290000000" itemprop="telephone">+375-29-000-00-00</a></p>
+                <p><strong>Должность:</strong> <span itemprop="jobTitle">Специалист поддержки</span></p>
+            </div>
+            
+            <address class="footer__social">
+                <a href="https://github.com/Genadly/SocialSphere" class="footer__social-link" itemprop="sameAs">GitHub</a>
+            </address>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
 </html>
