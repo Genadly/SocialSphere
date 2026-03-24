@@ -27,8 +27,7 @@
                 <ul class="header__menu">
                     <li><a href="#" class="header__menu-link" data-page="main">Главная</a></li>
                     <li><a href="#" class="header__menu-link" data-page="profile">Профиль</a></li>
-                    <li><a href="#" class="header__menu-link" data-page="messages">Сообщения</a></li>
-                    <li><a href="#" class="header__menu-link" data-page="settings">Настройки</a></li>
+                    <li><a href="#" class="header__menu-link" data-page="news">Лента</a></li>
                 </ul>
             </nav>
 
@@ -79,7 +78,25 @@
                 <button class="modal__close" id="closeModalBtn">&times;</button>
             </div>
             <textarea id="postContent" placeholder="Что у вас нового?"></textarea>
-            <button id="submitPostBtn">Опубликовать</button>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button id="cancelPostBtn" style="background-color: #ccc; color: #333;">Отмена</button>
+                <button id="submitPostBtn">Опубликовать</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для комментариев -->
+    <div id="commentsModal" class="modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3>Комментарии</h3>
+                <button class="modal__close" id="closeCommentsModalBtn">&times;</button>
+            </div>
+            <div id="commentsList" style="max-height: 300px; overflow-y: auto; margin-bottom: 1rem; padding: 0.5rem;"></div>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="newCommentText" placeholder="Написать комментарий..." style="flex:1; padding: 0.5rem; border-radius: 20px; border: 1px solid var(--color-secondary);">
+                <button id="addCommentBtn" style="background-color: var(--color-primary); color: white; border: none; border-radius: 20px; padding: 0.5rem 1rem;">Добавить</button>
+            </div>
         </div>
     </div>
 
