@@ -1,0 +1,398 @@
+
+.app {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    min-height: 70vh;
+}
+
+.sidebar {
+    background-color: var(--color-primary);
+    border-radius: 30px;
+    padding: var(--spacing-md);
+    color: var(--color-white);
+}
+
+.sidebar__title {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    padding: var(--spacing-sm);
+    border-radius: 20px;
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+    font-size: var(--font-size-lg);
+}
+
+.chat-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.chat-list__item {
+    width: 100%;
+}
+
+.chat {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    padding: var(--spacing-sm);
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--font-size-base);
+}
+
+.chat:hover {
+    background-color: var(--color-accent);
+    transform: translateX(5px);
+}
+
+.chat--active {
+    background-color: var(--color-accent);
+    border: 2px solid var(--color-white);
+}
+
+.chat-area {
+    background-color: var(--color-accent);
+    border-radius: 30px;
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    background-color: var(--color-secondary);
+    border-radius: 20px;
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.chat-header__title {
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+}
+
+.messages {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    max-height: 400px;
+    overflow-y: auto;
+    padding: var(--spacing-xs);
+}
+
+.message {
+    background-color: var(--color-background);
+    border-radius: 20px;
+    padding: var(--spacing-sm);
+    width: 80%;
+    align-self: center;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.message--outgoing {
+    align-self: flex-end;
+    background-color: var(--color-secondary);
+}
+
+.message__content {
+    color: var(--color-primary);
+    font-size: var(--font-size-base);
+}
+
+.input-area {
+    display: flex;
+    gap: var(--spacing-xs);
+    background-color: var(--color-white);
+    border-radius: 30px;
+    padding: var(--spacing-xs);
+}
+
+.input-area__field {
+    flex-grow: 1;
+    border: none;
+    padding: var(--spacing-sm);
+    border-radius: 25px;
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-base);
+    background-color: transparent;
+}
+
+.input-area__field:focus {
+    outline: 2px solid var(--color-primary);
+}
+
+.input-area__button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-base);
+    transition: background-color 0.3s ease;
+}
+
+.input-area__button:hover {
+    background-color: #2c6e68; 
+}
+
+/* ===== Лента новостей ===== */
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    max-width: 100%;
+}
+
+/* Карточка поста */
+.post {
+    background-color: var(--color-white);
+    border-radius: 30px;
+    padding: var(--spacing-md);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.post:hover {
+    transform: translateY(-2px);
+}
+
+.post__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.post__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color-secondary);
+    flex-shrink: 0;
+}
+
+.post__author {
+    font-weight: bold;
+    color: var(--color-primary);
+    font-size: var(--font-size-lg);
+}
+
+.post__date {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    opacity: 0.7;
+}
+
+.post__content {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.5;
+    color: var(--color-text);
+}
+
+.post__actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.post__like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-primary);
+    transition: color 0.2s;
+    font-family: var(--font-family-main);
+}
+
+.post__like-btn.liked {
+    color: #ff4d4d;
+}
+
+.post__like-btn:hover {
+    opacity: 0.8;
+}
+
+/* Комментарии */
+.post__comments {
+    margin-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-secondary);
+    padding-top: var(--spacing-sm);
+}
+
+.comment {
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+}
+
+.comment__author {
+    font-weight: bold;
+    color: var(--color-primary);
+    margin-right: var(--spacing-xs);
+}
+
+.comment-form {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+.comment-form input {
+    flex: 1;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--color-secondary);
+    border-radius: 30px;
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-sm);
+    background-color: var(--color-white);
+}
+
+.comment-form button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 30px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    cursor: pointer;
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-sm);
+    transition: background-color 0.3s;
+}
+
+.comment-form button:hover {
+    background-color: #2c6e68;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal__content {
+    background-color: var(--color-white);
+    border-radius: 30px;
+    width: 90%;
+    max-width: 500px;
+    padding: var(--spacing-lg);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.modal__header h3 {
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+}
+
+.modal__close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--color-primary);
+    line-height: 1;
+}
+
+.modal textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-secondary);
+    border-radius: 20px;
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-md);
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 30px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    cursor: pointer;
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-base);
+    transition: background-color 0.3s;
+}
+
+.modal button:hover {
+    background-color: #2c6e68;
+}
+
+/* Индикатор загрузки */
+.loader {
+    text-align: center;
+    padding: var(--spacing-md);
+    display: none;
+    color: var(--color-primary);
+    font-size: var(--font-size-base);
+}
+
+/* Кнопка создания поста (в шапке чата) */
+.create-post-btn {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-base);
+    transition: background-color 0.3s;
+}
+
+.create-post-btn:hover {
+    background-color: #2c6e68;
+}
+
+.placeholder-page {
+    background-color: var(--color-white);
+    border-radius: 30px;
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+}
+
+@media (min-width: 768px) {
+    .app {
+        grid-template-columns: 280px 1fr; 
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .app {
+        grid-template-columns: 280px 1fr 180px; 
+    }
+}

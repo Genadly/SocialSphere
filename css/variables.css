@@ -1,0 +1,24 @@
+:root {
+    --color-primary: #1a4d4a;      
+    --color-secondary: #8fd9d1;      
+    --color-accent: #b8e0d9;        
+    --color-background: #f0f5f2;     
+    --color-text: #2c3e3a;          
+    --color-white: #ffffff;
+
+    --font-family-main: 'Itim', cursive;
+    --font-size-sm: 0.875rem;       
+    --font-size-base: 1rem;          
+    --font-size-lg: 1.25rem;         
+    --font-size-xl: 1.5rem;       
+    --font-size-xxl: 2rem;          
+
+    --spacing-xs: 0.5rem; 
+    --spacing-sm: 1rem;   
+    --spacing-md: 1.5rem;  
+    --spacing-lg: 2rem;    
+    --spacing-xl: 2.5rem;   
+
+    --breakpoint-tablet: 768px;
+    --breakpoint-desktop: 1024px;
+}
