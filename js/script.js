@@ -1,11 +1,10 @@
-// ===== ОБЩИЕ ДАННЫЕ =====
-// Данные пользователя для профиля
+
 let userProfile = {
     name: 'Иван Иванов',
     email: 'ivan@example.com'
 };
 
-// Данные для ленты
+
 let posts = [];
 let currentPostPage = 0;
 const POSTS_PER_PAGE = 3;
@@ -13,11 +12,9 @@ let isLoading = false;
 let hasMore = true;
 let scrollHandlerActive = false;
 
-// Элементы, используемые на странице ленты
 let feedContainer, loaderElement, createPostBtn;
-let currentPostForComments = null; // для комментариев
+let currentPostForComments = null; 
 
-// ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
 function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/[&<>]/g, function(m) {
@@ -28,7 +25,6 @@ function escapeHtml(str) {
     });
 }
 
-// Генерация начальных постов
 function generateInitialPosts() {
     const initialPosts = [];
     for (let i = 1; i <= 10; i++) {
@@ -48,7 +44,6 @@ function generateInitialPosts() {
     return initialPosts;
 }
 
-// ===== ФУНКЦИИ ЛЕНТЫ =====
 function renderPost(post) {
     const postElement = document.createElement('article');
     postElement.className = 'post';
@@ -74,14 +69,14 @@ function renderPost(post) {
         </div>
     `;
 
-    // Обработчик лайка
+
     const likeBtn = postElement.querySelector('[data-like-btn]');
     likeBtn.addEventListener('click', (e) => {
         e.preventDefault();
         toggleLike(post.id);
     });
 
-    // Обработчик кнопки "Комментарии"
+    
     const commentsBtn = postElement.querySelector('[data-comments-btn]');
     commentsBtn.addEventListener('click', () => {
         openCommentsModal(post);
@@ -156,9 +151,9 @@ function addCommentToPost(postId, commentText) {
             text: commentText.trim(),
             date: new Date().toISOString()
         });
-        // Обновляем ленту, чтобы обновить счётчик комментариев
+        
         updateFeed();
-        // Если модальное окно открыто для этого поста, обновляем его содержимое
+        
         if (currentPostForComments && currentPostForComments.id === postId) {
             renderCommentsInModal(post);
         }
@@ -193,7 +188,7 @@ function renderCommentsInModal(post) {
     }
 }
 
-// ===== УПРАВЛЕНИЕ ПРОКРУТКОЙ =====
+
 function enableInfiniteScroll() {
     if (scrollHandlerActive) return;
     const handleScroll = () => {
@@ -213,7 +208,7 @@ function disableInfiniteScroll() {
     }
 }
 
-// ===== РЕНДЕР СТРАНИЦ =====
+
 function renderMainPage() {
     const appContainer = document.getElementById('app-container');
     appContainer.innerHTML = `
@@ -322,7 +317,7 @@ function renderNewsPage() {
     loaderElement = document.getElementById('loaderNews');
     createPostBtn = document.getElementById('createPostBtnNews');
 
-    // Инициализируем данные, если их ещё нет
+    
     if (posts.length === 0) {
         posts = generateInitialPosts();
     }
@@ -337,31 +332,31 @@ function renderNewsPage() {
         });
     }
 
-    // Включаем бесконечную прокрутку
+    
     enableInfiniteScroll();
 }
 
-// ===== ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ =====
+
 function switchPage(page) {
-    // Обновляем активный класс в меню
+    
     document.querySelectorAll('.header__menu-link').forEach(link => {
         link.classList.remove('active');
     });
     const activeLink = document.querySelector(`.header__menu-link[data-page="${page}"]`);
     if (activeLink) activeLink.classList.add('active');
 
-    // Отключаем бесконечную прокрутку, если она активна
+    
     disableInfiniteScroll();
 
-    // Управляем классом контейнера
+    
     const container = document.getElementById('app-container');
     if (page === 'main') {
-        container.classList.add('app');   // для главной страницы оставляем сетку
+        container.classList.add('app');   
     } else {
-        container.classList.remove('app'); // для остальных убираем сетку
+        container.classList.remove('app');
     }
 
-    // Рендерим нужную страницу
+  
     switch (page) {
         case 'main':
             renderMainPage();
@@ -377,7 +372,7 @@ function switchPage(page) {
     }
 }
 
-// ===== ИНИЦИАЛИЗАЦИЯ =====
+
 function initNavigation() {
     const menuLinks = document.querySelectorAll('.header__menu-link');
     menuLinks.forEach(link => {
@@ -388,7 +383,7 @@ function initNavigation() {
         });
     });
 
-    // Активная страница по умолчанию
+    
     const defaultPage = 'main';
     const defaultLink = document.querySelector(`.header__menu-link[data-page="${defaultPage}"]`);
     if (defaultLink) defaultLink.classList.add('active');
@@ -396,7 +391,7 @@ function initNavigation() {
 }
 
 function initModals() {
-    // Модалка для создания поста
+    
     const postModal = document.getElementById('postModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const cancelPostBtn = document.getElementById('cancelPostBtn');
@@ -413,11 +408,11 @@ function initModals() {
                 postContent.value = '';
             }
         });
-        // Закрытие по клику на фон
+       
         postModal.addEventListener('click', (e) => {
             if (e.target === postModal) postModal.style.display = 'none';
         });
-        // Закрытие по Escape
+        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && postModal.style.display === 'flex') {
                 postModal.style.display = 'none';
@@ -425,7 +420,7 @@ function initModals() {
         });
     }
 
-    // Модалка для комментариев
+   
     const commentsModal = document.getElementById('commentsModal');
     const closeCommentsBtn = document.getElementById('closeCommentsModalBtn');
     const addCommentBtn = document.getElementById('addCommentBtn');
@@ -448,7 +443,7 @@ function initModals() {
     }
 }
 
-// Функция sendMessage уже существует (для главной страницы)
+
 function sendMessage() {
     const input = document.getElementById('messageInput');
     const messageText = input.value.trim();
@@ -466,7 +461,7 @@ function sendMessage() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-// Запуск при загрузке
+
 document.addEventListener('DOMContentLoaded', () => {
     initModals();
     initNavigation();
