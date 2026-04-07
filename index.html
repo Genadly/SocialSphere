@@ -49,13 +49,12 @@
     </header>
 
     <div class="app" id="app-container">
-        <!-- Здесь будет динамическое содержимое -->
+        <!-- Динамическое содержимое -->
     </div>
 
     <footer class="footer">
         <div class="footer__container" itemprop="footer">
             <p class="footer__copyright">© 2026 SocialSphere. All rights reserved.</p>
-            
             <div class="footer__contacts" itemprop="employee" itemscope itemtype="https://schema.org/Person">
                 <h3>Служба поддержки</h3>
                 <p><strong>Контактное лицо:</strong> <span itemprop="name">Служба поддержки</span></p>
@@ -63,18 +62,17 @@
                 <p><strong>Телефон:</strong> <a href="tel:+375290000000" itemprop="telephone">+375-29-100-00-00</a></p>
                 <p><strong>Должность:</strong> <span itemprop="jobTitle">Специалист поддержки</span></p>
             </div>
-            
             <address class="footer__social">
                 <a href="https://github.com/Genadly/SocialSphere" class="footer__social-link" itemprop="sameAs">GitHub</a>
             </address>
         </div>
     </footer>
 
-    <!-- Модальное окно для создания поста -->
+    <!-- Модальное окно для создания/редактирования поста -->
     <div id="postModal" class="modal">
         <div class="modal__content">
             <div class="modal__header">
-                <h3>Создать новый пост</h3>
+                <h3 id="postModalTitle">Создать новый пост</h3>
                 <button class="modal__close" id="closeModalBtn">&times;</button>
             </div>
             <textarea id="postContent" placeholder="Что у вас нового?"></textarea>
@@ -82,6 +80,7 @@
                 <button id="cancelPostBtn" style="background-color: #ccc; color: #333;">Отмена</button>
                 <button id="submitPostBtn">Опубликовать</button>
             </div>
+            <input type="hidden" id="editPostId" value="">
         </div>
     </div>
 
