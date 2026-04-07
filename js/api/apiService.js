@@ -1,78 +1,87 @@
-class ApiService {
-  constructor(baseURL, apiKey = null) {
-    this.baseURL = baseURL;
-    this.apiKey = apiKey;
-  }
+import { API_BASE_URL, MAX_REAL_ID } from './config.js';
 
-  // GET запрос с авторизацией через параметр api_key
-  async get(endpoint, params = {}) {
-    try {
-      const queryParams = new URLSearchParams({
-        ...params,
-        ...(this.apiKey && { appid: this.apiKey }),
-      }).toString();
-
-      const url = `${this.baseURL}${endpoint}?${queryParams}`;
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('GET request failed:', error);
-      throw error;
-    }
-  }
-
-  // POST запрос
-  async post(endpoint, data) {
-    try {
-      const response = await fetch(`${this.baseURL}${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('POST request failed:', error);
-      throw error;
-    }
-  }
-
-  // Универсальный метод для различных API
-  async fetchFromAPI(endpoint, options = {}) {
-    const defaultOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+// Универсальная функция для запросов с обработкой ошибок
+async function request(endpoint, options = {}) {
+    const url = `${API_BASE_URL}${endpoint}`;
+    const config = {
+        headers: { 'Content-Type': 'application/json' },
+        ...options
     };
     try {
-      const response = await fetch(`${this.baseURL}${endpoint}`, {
-        ...defaultOptions,
-        ...options,
-      });
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-      }
-      return await response.json();
+        const response = await fetch(url, config);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        if (response.status === 204) return null;
+        return await response.json();
     } catch (error) {
-      console.error('API request failed:', error);
-      throw error;
+        console.error(`API Error (${endpoint}):`, error);
+        throw error;
     }
-  }
 }
 
-export default ApiService;
+// ----- ПОСТЫ -----
+export async function fetchPosts(limit = 30) {
+    return request(`/posts?_limit=${limit}`);
+}
+
+export async function fetchPostById(id) {
+    return request(`/posts/${id}`);
+}
+
+export async function createPost(post) {
+    return request('/posts', {
+        method: 'POST',
+        body: JSON.stringify(post)
+    });
+}
+
+export async function updatePost(id, post) {
+    if (id > MAX_REAL_ID) {
+        console.warn(`updatePost: ID ${id} превышает максимальный реальный ID, запрос пропущен`);
+        return null;
+    }
+    return request(`/posts/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(post)
+    });
+}
+
+export async function deletePost(id) {
+    if (id > MAX_REAL_ID) {
+        console.warn(`deletePost: ID ${id} превышает максимальный реальный ID, запрос пропущен`);
+        return null;
+    }
+    return request(`/posts/${id}`, { method: 'DELETE' });
+}
+
+// ----- КОММЕНТАРИИ -----
+export async function fetchCommentsByPost(postId) {
+    return request(`/posts/${postId}/comments`);
+}
+
+export async function createComment(comment) {
+    return request('/comments', {
+        method: 'POST',
+        body: JSON.stringify(comment)
+    });
+}
+
+export async function updateComment(id, comment) {
+    if (id > 500) {
+        console.warn(`updateComment: ID ${id} пропущен`);
+        return null;
+    }
+    return request(`/comments/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(comment)
+    });
+}
+
+export async function deleteComment(id) {
+    if (id > 500) {
+        console.warn(`deleteComment: ID ${id} пропущен`);
+        return null;
+    }
+    return request(`/comments/${id}`, { method: 'DELETE' });
+}

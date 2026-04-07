@@ -1,62 +1,70 @@
-class LocalStorageService {
-  constructor() {
-    this.storage = window.localStorage;
-    this.initializeStorage();
-  }
+// Ключи хранилища
+const DRAFT_KEY = 'draft_post';
+const OFFLINE_QUEUE_KEY = 'offline_posts_queue';
+const POSTS_CACHE_KEY = 'posts_cache';
+const PROFILE_KEY = 'user_profile';
 
-  initializeStorage() {
-    // Исправлено: заменяем getItem на get
-    if (!this.get('app_settings')) {
-      this.set('app_settings', {
-        theme: 'light',
-        language: 'ru',
-        cacheDuration: 3600000, // 1 час
-      });
+// ----- ЧЕРНОВИКИ -----
+export function saveDraft(content) {
+    if (content && content.trim()) {
+        localStorage.setItem(DRAFT_KEY, content);
+    } else {
+        localStorage.removeItem(DRAFT_KEY);
     }
-  }
-
-  // Сохранение данных с временной меткой
-  set(key, value) {
-    try {
-      const item = {
-        value: value,
-        timestamp: new Date().getTime(),
-      };
-      this.storage.setItem(key, JSON.stringify(item));
-      return true;
-    } catch (error) {
-      console.error('Error saving to localStorage:', error);
-      return false;
-    }
-  }
-
-  // Получение данных с проверкой актуальности
-  get(key, defaultValue = null, maxAge = null) {
-    try {
-      const item = this.storage.getItem(key);
-      if (!item) return defaultValue;
-      const parsedItem = JSON.parse(item);
-      
-      if (maxAge && new Date().getTime() - parsedItem.timestamp > maxAge) {
-        this.remove(key);
-        return defaultValue;
-      }
-      return parsedItem.value;
-    } catch (error) {
-      console.error('Error reading from localStorage:', error);
-      return defaultValue;
-    }
-  }
-
-  remove(key) {
-    try {
-      this.storage.removeItem(key);
-      return true;
-    } catch (error) {
-      console.error('Error removing from localStorage:', error);
-      return false;
-    }
-  }
 }
 
-export default LocalStorageService;
+export function getDraft() {
+    return localStorage.getItem(DRAFT_KEY) || '';
+}
+
+export function clearDraft() {
+    localStorage.removeItem(DRAFT_KEY);
+}
+
+// ----- ОЧЕРЕДЬ ОФЛАЙН-ПОСТОВ -----
+// Каждый элемент очереди: { id, method, data, originalId, timestamp }
+export function getOfflineQueue() {
+    const queue = localStorage.getItem(OFFLINE_QUEUE_KEY);
+    return queue ? JSON.parse(queue) : [];
+}
+
+export function addToOfflineQueue(item) {
+    const queue = getOfflineQueue();
+    queue.push({
+        id: Date.now(),
+        ...item,
+        timestamp: new Date().toISOString(),
+        retries: 0
+    });
+    localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(queue));
+}
+
+export function removeFromOfflineQueue(queueId) {
+    let queue = getOfflineQueue();
+    queue = queue.filter(item => item.id !== queueId);
+    localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(queue));
+}
+
+export function clearOfflineQueue() {
+    localStorage.removeItem(OFFLINE_QUEUE_KEY);
+}
+
+// ----- КЭШ ПОСТОВ -----
+export function cachePosts(posts) {
+    localStorage.setItem(POSTS_CACHE_KEY, JSON.stringify(posts));
+}
+
+export function getCachedPosts() {
+    const cached = localStorage.getItem(POSTS_CACHE_KEY);
+    return cached ? JSON.parse(cached) : null;
+}
+
+// ----- ПРОФИЛЬ -----
+export function saveProfile(profile) {
+    localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+}
+
+export function getProfile() {
+    const profile = localStorage.getItem(PROFILE_KEY);
+    return profile ? JSON.parse(profile) : { name: 'Иван Иванов', email: 'ivan@example.com' };
+}

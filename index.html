@@ -76,9 +76,11 @@
                 <button class="modal__close" id="closeModalBtn">&times;</button>
             </div>
             <textarea id="postContent" placeholder="Что у вас нового?"></textarea>
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <!-- Индикатор черновика -->
+            <div style="font-size: 12px; color: gray; margin-top: 5px;" id="draftIndicator"></div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
                 <button id="cancelPostBtn" style="background-color: #ccc; color: #333;">Отмена</button>
-                <button id="submitPostBtn">Опубликовать</button>
+                <button id="submitPostBtn" style="background-color: var(--color-primary); color: white;">Опубликовать</button>
             </div>
             <input type="hidden" id="editPostId" value="">
         </div>
@@ -99,8 +101,21 @@
         </div>
     </div>
 
-    <script src="js/utils/helpers.js"></script>
-    <script src="js/components/modal.js"></script>
-    <script src="js/script.js"></script>
+    <!-- Индикатор сетевого статуса -->
+    <div id="networkStatus" style="position: fixed; bottom: 10px; right: 10px; background: #333; color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px; z-index: 9999;"></div>
+
+    
+    <script type="module" src="js/script.js"></script>
+    <script>
+        // Обновление индикатора сети
+        function updateNetworkStatus() {
+            const status = navigator.onLine ? '🟢 Онлайн' : '🔴 Офлайн';
+            const el = document.getElementById('networkStatus');
+            if (el) el.innerText = status;
+        }
+        window.addEventListener('online', updateNetworkStatus);
+        window.addEventListener('offline', updateNetworkStatus);
+        updateNetworkStatus();
+    </script>
 </body>
 </html>
