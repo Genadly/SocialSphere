@@ -1,10 +1,10 @@
-// Ключи хранилища
+
 const DRAFT_KEY = 'draft_post';
 const OFFLINE_QUEUE_KEY = 'offline_posts_queue';
 const POSTS_CACHE_KEY = 'posts_cache';
 const PROFILE_KEY = 'user_profile';
 
-// ----- ЧЕРНОВИКИ -----
+
 export function saveDraft(content) {
     if (content && content.trim()) {
         localStorage.setItem(DRAFT_KEY, content);
@@ -21,8 +21,7 @@ export function clearDraft() {
     localStorage.removeItem(DRAFT_KEY);
 }
 
-// ----- ОЧЕРЕДЬ ОФЛАЙН-ПОСТОВ -----
-// Каждый элемент очереди: { id, method, data, originalId, timestamp }
+
 export function getOfflineQueue() {
     const queue = localStorage.getItem(OFFLINE_QUEUE_KEY);
     return queue ? JSON.parse(queue) : [];
@@ -49,7 +48,7 @@ export function clearOfflineQueue() {
     localStorage.removeItem(OFFLINE_QUEUE_KEY);
 }
 
-// ----- КЭШ ПОСТОВ -----
+
 export function cachePosts(posts) {
     localStorage.setItem(POSTS_CACHE_KEY, JSON.stringify(posts));
 }
@@ -59,7 +58,7 @@ export function getCachedPosts() {
     return cached ? JSON.parse(cached) : null;
 }
 
-// ----- ПРОФИЛЬ -----
+
 export function saveProfile(profile) {
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
 }

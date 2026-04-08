@@ -1,4 +1,4 @@
-// Локальное хранилище лайков (так как API не поддерживает)
+
 let likesStorage = JSON.parse(localStorage.getItem('post_likes') || '{}');
 
 export function getPostLikes(postId) {
@@ -21,7 +21,7 @@ export function toggleLike(postId, currentLiked) {
     return { likes, liked: !currentLiked };
 }
 
-// Преобразование поста из API в формат UI
+
 export function parsePost(apiPost, localLikes = {}) {
     return {
         id: apiPost.id,
@@ -34,7 +34,7 @@ export function parsePost(apiPost, localLikes = {}) {
     };
 }
 
-// Парсинг комментариев
+
 export function parseComment(apiComment) {
     return {
         id: apiComment.id,

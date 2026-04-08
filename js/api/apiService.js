@@ -1,6 +1,6 @@
 import { API_BASE_URL, MAX_REAL_ID } from './config.js';
 
-// Универсальная функция для запросов с обработкой ошибок
+
 async function request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`;
     const config = {
@@ -20,7 +20,7 @@ async function request(endpoint, options = {}) {
     }
 }
 
-// ----- ПОСТЫ -----
+
 export async function fetchPosts(limit = 30) {
     return request(`/posts?_limit=${limit}`);
 }
@@ -55,7 +55,7 @@ export async function deletePost(id) {
     return request(`/posts/${id}`, { method: 'DELETE' });
 }
 
-// ----- КОММЕНТАРИИ -----
+
 export async function fetchCommentsByPost(postId) {
     return request(`/posts/${postId}/comments`);
 }

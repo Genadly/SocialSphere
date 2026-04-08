@@ -1,5 +1,4 @@
-// ===== ИМПОРТЫ =====
-import { API_BASE_URL } from './api/config.js';
+
 import {
     fetchPosts,
     createPost,
@@ -24,9 +23,9 @@ import {
 } from './storage/localStorage.js';
 import { parsePost, parseComment, getPostLikes, setPostLikes, toggleLike as toggleLikeUtil } from './utils/dataParser.js';
 
-// ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
-let userProfile = getProfile();               // загружаем профиль из localStorage
-let posts = [];                               // массив постов (локальная копия)
+
+let userProfile = getProfile();               
+let posts = [];                               
 let currentPostPage = 0;
 const POSTS_PER_PAGE = 3;
 let isLoading = false;
@@ -34,7 +33,7 @@ let hasMore = true;
 let scrollHandlerActive = false;
 let feedContainer, loaderElement, createPostBtn;
 let currentPostForComments = null;
-let currentSort = 'date-desc';                // date-desc, date-asc, title-asc, title-desc
+let currentSort = 'date-desc';                
 let searchQuery = '';
 let isEditingPost = false;
 let editingPostId = null;
@@ -50,11 +49,11 @@ function escapeHtml(str) {
     });
 }
 
-// ===== API И КЭШ =====
+
 async function loadPostsFromAPI() {
     const cached = getCachedPosts();
     if (cached && cached.length) {
-        // Убедимся, что у каждого поста есть поле pending
+        
         posts = cached.map(p => ({ ...p, pending: p.pending !== undefined ? p.pending : false }));
         await refreshFeed();
     } else {
@@ -130,7 +129,7 @@ async function processOfflineQueue() {
 
             if (method === 'POST') {
                 if (postId) {
-                    // Комментарий
+                    
                     const result = await createComment(data);
                     let post = posts.find(p => p.id === postId);
                     if (!post && postId > 100) {
@@ -165,7 +164,7 @@ async function processOfflineQueue() {
                         needRefresh = true;
                     }
                 } else {
-                    // Пост
+                    
                     const result = await createPost(data);
                     let localPost = posts.find(p => p.id === originalId);
                     if (!localPost) {
@@ -264,7 +263,7 @@ async function processOfflineQueue() {
     }
 }
 
-// ===== ЛОГИКА ЛЕНТЫ (ФИЛЬТРАЦИЯ, СОРТИРОВКА, РЕНДЕРИНГ) =====
+
 function getFilteredAndSortedPosts() {
     let filtered = posts.filter(post =>
         post.content.toLowerCase().includes(searchQuery.toLowerCase())
@@ -296,7 +295,7 @@ function renderPost(post) {
     const likedClass = post.liked ? 'liked' : '';
     const likeIcon = post.liked ? '❤️' : '🤍';
     const isOwner = (post.author === userProfile.name);
-    const pendingIcon = post.pending ? ' ⏳ (не отправлено)' : '';   // ← индикатор
+    const pendingIcon = post.pending ? ' ⏳ (не отправлено)' : '';   
 
     const editDeleteButtons = isOwner ? `
         <button class="post__edit-btn" data-edit-post>✏️ Редактировать</button>
@@ -321,7 +320,7 @@ function renderPost(post) {
         </div>
     `;
 
-    // Лайк
+
     const likeBtn = postElement.querySelector('[data-like-btn]');
     likeBtn.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -332,7 +331,7 @@ function renderPost(post) {
         await refreshFeed();
     });
 
-    // Комментарии
+
     const commentsBtn = postElement.querySelector('[data-comments-btn]');
     commentsBtn.addEventListener('click', async () => {
         if (post.comments.length === 0) {
@@ -341,13 +340,13 @@ function renderPost(post) {
         openCommentsModal(post);
     });
 
-    // Редактирование
+
     const editBtn = postElement.querySelector('[data-edit-post]');
     if (editBtn) {
         editBtn.addEventListener('click', () => openEditPostModal(post));
     }
 
-    // Удаление
+
     const deleteBtn = postElement.querySelector('[data-delete-post]');
     if (deleteBtn) {
         deleteBtn.addEventListener('click', async () => {
@@ -395,8 +394,8 @@ async function loadMorePosts() {
     }, 500);
 }
 
-// ===== СОЗДАНИЕ, РЕДАКТИРОВАНИЕ, УДАЛЕНИЕ ПОСТОВ =====
-let isCreating = false; // уже есть в глобальных
+
+let isCreating = false; 
 
 async function createNewPost(content) {
     if (isCreating) return false;
@@ -417,7 +416,7 @@ async function createNewPost(content) {
             likes: 0,
             liked: false,
             comments: [],
-            pending: true   // ← индикатор
+            pending: true   
         };
         posts.unshift(tempPost);
         await refreshFeed();
@@ -468,7 +467,7 @@ async function updateExistingPost(postId, newContent) {
         body: newContent
     };
     post.content = newContent;
-    post.pending = true;   // помечаем как несинхронизированное
+    post.pending = true;   
     await refreshFeed();
     cachePosts(posts);
 
@@ -501,10 +500,10 @@ function openEditPostModal(post) {
     textarea.value = post.content;
     document.getElementById('editPostId').value = post.id;
     modal.style.display = 'flex';
-    // Больше никакого переопределения обработчика кнопки
+    
 }
 
-// ===== КОММЕНТАРИИ (МОДАЛЬНОЕ ОКНО) =====
+
 function openCommentsModal(post) {
     currentPostForComments = post;
     const modal = document.getElementById('commentsModal');
@@ -534,7 +533,7 @@ function renderCommentsInModal(post) {
             `;
             container.appendChild(div);
         });
-        // Редактирование комментария (оставляем без изменений, но можно добавить pending)
+        
         document.querySelectorAll('.edit-comment-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
                 const commentId = parseInt(btn.dataset.id);
@@ -559,7 +558,7 @@ function renderCommentsInModal(post) {
                 }
             });
         });
-        // Удаление комментария (оставляем без изменений)
+        
         document.querySelectorAll('.delete-comment-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
                 const commentId = parseInt(btn.dataset.id);
@@ -640,7 +639,7 @@ async function addCommentToPost(postId, commentText) {
     }
 }
 
-// ===== РЕНДЕР СТРАНИЦ (ПОЛНЫЕ ВЕРСИИ) =====
+
 function renderMainPage() {
     const appContainer = document.getElementById('app-container');
     appContainer.innerHTML = `
@@ -753,7 +752,6 @@ async function renderNewsPage() {
     enableInfiniteScroll();
 }
 
-// ===== БЕСКОНЕЧНАЯ ПРОКРУТКА =====
 function enableInfiniteScroll() {
     if (scrollHandlerActive) return;
     const handleScroll = () => {
@@ -773,7 +771,7 @@ function disableInfiniteScroll() {
     }
 }
 
-// ===== ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ =====
+
 function switchPage(page) {
     document.querySelectorAll('.header__menu-link').forEach(link => link.classList.remove('active'));
     const activeLink = document.querySelector(`.header__menu-link[data-page="${page}"]`);
@@ -882,7 +880,7 @@ function initModals() {
 });
 }
 
-// ===== ФУНКЦИЯ ОТПРАВКИ СООБЩЕНИЯ ДЛЯ ГЛАВНОЙ СТРАНИЦЫ =====
+
 window.sendMessage = function() {
     const input = document.getElementById('messageInput');
     if (!input) return;
@@ -897,7 +895,7 @@ window.sendMessage = function() {
     messages.scrollTop = messages.scrollHeight;
 };
 
-// ===== ЗАПУСК ПРИ ЗАГРУЗКЕ СТРАНИЦЫ =====
+
 document.addEventListener('DOMContentLoaded', async () => {
     initModals();
     initNavigation();
