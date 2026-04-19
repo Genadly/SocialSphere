@@ -6,6 +6,7 @@
     color: var(--color-white);
 }
 
+
 .footer__container {
     display: flex;
     flex-direction: column;
